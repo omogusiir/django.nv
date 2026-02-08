@@ -13,16 +13,18 @@ jobs:
       - checkout
       - run: echo "This is a test step"
 
-  integration:
-    docker:
-      - image: cimg/base:stable
+  zap_baseline:
+    machine: true
     steps:
       - checkout
-      - run:
-          command: |
-            echo "This is an integration step"
-            exit 1
-          when: on_fail                 # Even if the job fails, continue to the next stages
+
+      - run: |
+          docker pull hysnsec/zap:2.16.1
+          docker run --user root --rm -v $(pwd):/zap/wrk:rw -w /zap hysnsec/zap:2.16.1 zap-baseline.py -t https://prod-hmrer927.lab.practical-devsecops.training -J zap-output.json || true
+
+      - store_artifacts:
+          path: zap-output.json
+          destination: zap-artifact
 
   prod:
     docker:
