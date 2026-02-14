@@ -1,4 +1,4 @@
-# FROM specify the underlying operating system you will use to build the image
+# FROM specify the underlying operating system you will use to build the image and
 FROM python:3-alpine3.15
 
 # WORKDIR set the default working directory
