@@ -39,6 +39,6 @@ workflows:
     jobs:
       - build
       - test
-      - integration
+      - zap_baseline
       - prod:
           type: approval
